@@ -33,6 +33,9 @@
 
 # Web related
 lib/generated_plugin_registrant.dart
+lib/constants/strings.dart
+
+.gitignore
 
 # Symbolication related
 app.*.symbols
