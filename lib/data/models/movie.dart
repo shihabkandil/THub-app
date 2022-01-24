@@ -1,7 +1,3 @@
-
-
-
-
 class Movie{
   late String movieID;
   late String title;
