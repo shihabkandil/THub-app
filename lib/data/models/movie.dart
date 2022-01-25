@@ -1,22 +1,17 @@
 class Movie{
-  late String movieID;
-  late String title;
+  late int id;
   late String overview;
-  late String posterImgPath;
+  late String posterPath;
   late String releaseDate;
+  late String title;
 
-  Movie(this.movieID,
-      this.title,
-      this.overview,
-      this.posterImgPath,
-      this.releaseDate);
+  Movie(this.id, this.overview,  this.posterPath, this.releaseDate, this.title);
 
-  Movie.fromJson(Map<String,dynamic>json){
-    movieID = json["id"];
-    title = json["title"];
-    overview = json["overview"];
-    posterImgPath = json["poster_path"];
-    releaseDate = json["release_date"];
+  Movie.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    overview = json['overview'];
+    posterPath = json['poster_path'];
+    releaseDate = json['release_date'];
+    title = json['title'];
   }
-
 }

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:movieapi/constants/strings.dart';
+import 'package:movieapi/data/models/movie.dart';
 
 class MovieWebService{
   late Dio dio;
@@ -11,16 +14,15 @@ class MovieWebService{
       connectTimeout: 20*1000,
       receiveTimeout: 20*1000
     );
+    dio = Dio(options);
   }
-  
-  Future<List<dynamic>> getAllMovies()async{
+  Future<dynamic> getAllMovies()async{
     try{
-      Response response = await dio.get("movie/popular?api_key="+API);
+      Response response = await dio.get("discover/movie?api_key="+API);
       return response.data;
     }
     catch(e){
-      print(e.toString());
-      return [];
+      throw(e);
     }
   }
 }

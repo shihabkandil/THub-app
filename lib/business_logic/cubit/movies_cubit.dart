@@ -7,7 +7,7 @@ part 'movies_state.dart';
 class MoviesCubit extends Cubit<MoviesState> {
 
   final MoviesRepository moviesRepository;
-  late List<Movie> movies;
+  List<Movie> movies = [];
   MoviesCubit(this.moviesRepository) : super(MoviesInitial());
 
   List<Movie> getAllMovies(){
