@@ -1,9 +1,9 @@
-import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapi/business_logic/cubit/discover_movies/discover_movies_cubit.dart';
 import 'package:movieapi/business_logic/cubit/now_playing_movies/now_playing_movies_cubit.dart';
@@ -13,6 +13,7 @@ import 'package:movieapi/business_logic/cubit/upcoming_movies/upcoming_movies_cu
 import 'package:movieapi/constants/colors.dart';
 import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/presentation/widgets/movie_card.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 
 class MoviesScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
       ),
   ),
         Text("Check latest movies.",style: TextStyle(
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: FontWeight.w500,
       color: Colors.grey,
       ),
@@ -71,43 +72,50 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
 
   Widget MoviesBar({required TabController controller}){
     return Container(
+      //margin: EdgeInsets.only(left: 30),
       padding: EdgeInsets.only(left: 10,right: 10),
-      height: 80,
-      child: ButtonsTabBar(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: MyColors.red
-        ),
-        unselectedDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: MyColors.grey,
-        ),
+      child: TabBar(
         labelStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.w500
+          fontSize: 18,
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w500
         ),
-        unselectedLabelStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.w500
-        ),
-        buttonMargin: EdgeInsets.only(top: 18,bottom:17,left: 20),
-        contentPadding: EdgeInsets.all(13),
-        controller:controller,
-        tabs: const <Widget>[
-          Tab(text: "Discover",),
-          Tab(text: "Popular",),
-          Tab(text: "Top-rated",),
-          Tab(text: "Upcoming",),
+        padding: EdgeInsets.only(left: 30),
+        isScrollable: true,
+        controller: _tabController,
+        tabs: [
+          Tab(
+              text: "Discover",
+          ),
+          Tab(
+            text: "Popular",
+          ),
+          Tab(
+            text: "Top-Rated",
+          ),
+          Tab(
+            text: "Upcoming",
+          ),
         ],
+        labelColor: Colors.white,
+        // add it here
+        indicator: RectangularIndicator(
+          color: MyColors.red,
+          bottomLeftRadius: 20,
+          bottomRightRadius: 20,
+          topLeftRadius: 20,
+          topRightRadius: 20,
+          horizontalPadding: 5,
+          verticalPadding: 1,
+          paintingStyle: PaintingStyle.fill,
+        ),
       ),
     );
   }
 
   Widget MoviesTabView() {
     return Container(
-      height: MediaQuery.of(context).size.height/3.5,
+      height:700/MediaQuery.of(context).devicePixelRatio,
       child: TabBarView(
           controller: _tabController,
           children: <Widget>[
@@ -268,12 +276,13 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
         itemCount: 9,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
              MovieCard(movie: nowPlayingMovies[itemIndex],),
-        options: CarouselOptions(height: 370,
+        options: CarouselOptions(
+          height: 1200/MediaQuery.of(context).devicePixelRatio,
         autoPlay: true,
         autoPlayCurve: Curves.decelerate,
         disableCenter: true,
         enlargeCenterPage: true,
-        viewportFraction: 0.7,
+        viewportFraction: 0.72,
         ),
       ),
     );

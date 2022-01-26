@@ -12,7 +12,7 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-        width: MediaQuery.of(context).size.width/2.2,
+        width: 440/MediaQuery.of(context).devicePixelRatio,
       padding: EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -20,17 +20,14 @@ class MovieCard extends StatelessWidget {
       margin: EdgeInsets.all(8),
       child: InkWell(
         onTap: ()=>Navigator.pushNamed(context,MovieDetailsPage,arguments: movie),
-        child: Hero(
-          tag: movie.id,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: CachedNetworkImage(
-              fit: BoxFit.fitWidth,
-              imageUrl: "https://image.tmdb.org/t/p/original/${movie.posterPath}",
-              placeholder: (context, url) => Center(child: CircularProgressIndicator(color: MyColors.red,)),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              )
-          ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: CachedNetworkImage(
+            fit: BoxFit.cover,
+            imageUrl: "https://image.tmdb.org/t/p/original/${movie.posterPath}",
+            placeholder: (context, url) => Center(child: CircularProgressIndicator(color: MyColors.red,)),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+            )
         ),
       )
     );
