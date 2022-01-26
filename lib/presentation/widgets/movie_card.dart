@@ -12,6 +12,7 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
+        width: MediaQuery.of(context).size.width/2.2,
       padding: EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
