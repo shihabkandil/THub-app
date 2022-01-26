@@ -16,9 +16,14 @@ class MovieWebService{
     );
     dio = Dio(options);
   }
-  Future<dynamic> getAllMovies()async{
+  Future<dynamic> getAllMovies({required String query})async{
     try{
-      Response response = await dio.get("discover/movie?api_key="+API);
+      Response response;
+      if(query == DiscoverMoviesQuery)
+      response = await dio.get("${query}/movie/?api_key="+API+"&page=2");
+      else
+         response = await dio.get("movie/${query}?api_key="+API);
+
       return response.data;
     }
     catch(e){
