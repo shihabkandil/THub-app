@@ -11,7 +11,7 @@ import 'package:movieapi/business_logic/cubit/popular_movies/popular_movies_cubi
 import 'package:movieapi/business_logic/cubit/top_rated_movies/top_rated_movies_cubit.dart';
 import 'package:movieapi/business_logic/cubit/upcoming_movies/upcoming_movies_cubit.dart';
 import 'package:movieapi/constants/colors.dart';
-import 'package:movieapi/data/models/movie.dart';
+import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/presentation/widgets/movie_card.dart';
 
 
@@ -24,11 +24,11 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMixin{
 
-  late List<Movie> popularMovies;
-  late List<Movie> discoverMovies;
-  late List<Movie> topRatedMovies;
-  late List<Movie> upcomingMovies;
-  late List<Movie> nowPlayingMovies;
+  late List<MovieModel> popularMovies;
+  late List<MovieModel> discoverMovies;
+  late List<MovieModel> topRatedMovies;
+  late List<MovieModel> upcomingMovies;
+  late List<MovieModel> nowPlayingMovies;
 
 
   late TabController _tabController;
@@ -249,13 +249,13 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
 
   Widget NowplayingTitle(){
     return Container(
-      margin: EdgeInsets.only(top: 35,bottom: 15,left: 35),
+      margin: EdgeInsets.only(top: 35,bottom: 15,left: 30),
       alignment: Alignment.centerLeft,
       child: Text("Now Playing",
       style: TextStyle(
         fontFamily: 'Poppins',
           fontWeight: FontWeight.w400,
-          fontSize: 24,
+          fontSize: 23,
           color: Colors.white
       ),),
     );

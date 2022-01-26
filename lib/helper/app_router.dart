@@ -8,12 +8,14 @@ import 'package:movieapi/business_logic/cubit/popular_movies/popular_movies_cubi
 import 'package:movieapi/business_logic/cubit/top_rated_movies/top_rated_movies_cubit.dart';
 import 'package:movieapi/business_logic/cubit/upcoming_movies/upcoming_movies_cubit.dart';
 import 'package:movieapi/constants/strings.dart';
-import 'package:movieapi/data/repository/movies_repository.dart';
+import 'package:movieapi/data/models/movie_model.dart';
+import 'package:movieapi/data/repository/movies_categories_repository.dart';
 import 'package:movieapi/data/web_services/movies_web_service.dart';
-import 'package:movieapi/presentation/screens/movies_screen.dart';
+import 'package:movieapi/presentation/screens/home_screen.dart';
+import 'package:movieapi/presentation/screens/movie_details.dart';
 
 class AppRouter{
-  late MoviesRepository moviesRepository;
+  late MoviesCategoryRepository moviesRepository;
 
   late DiscoverMoviesCubit discoverMoviesCubit;
   late NowPlayingMoviesCubit nowPlayingMoviesCubit;
@@ -23,7 +25,7 @@ class AppRouter{
 
 
   AppRouter(){
-    moviesRepository = MoviesRepository(MovieWebService());
+    moviesRepository = MoviesCategoryRepository(MovieWebService());
     discoverMoviesCubit = DiscoverMoviesCubit(moviesRepository);
     nowPlayingMoviesCubit = NowPlayingMoviesCubit(moviesRepository);
     popularMoviesCubit = PopularMoviesCubit(moviesRepository);
@@ -55,6 +57,12 @@ class AppRouter{
             child: MoviesScreen(),
           ),
       );
+
+      case MovieDetailsPage:
+        final movie = settings.arguments as MovieModel;
+        return  MaterialPageRoute(
+          builder:(_)=>MovieDetailsScreen(movie: movie)
+          );
     }
   }
 }

@@ -6,7 +6,7 @@ abstract class PopularMoviesState {}
 class PopularMoviesInitial extends PopularMoviesState {}
 
 class PopularMoviesLoaded extends PopularMoviesState{
-  final List<Movie> popularMovies;
+  final List<MovieModel> popularMovies;
 
   PopularMoviesLoaded(this.popularMovies);
 }

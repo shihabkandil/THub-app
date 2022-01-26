@@ -5,7 +5,7 @@ abstract class UpcomingMoviesState {}
 class UpcomingMoviesInitial extends UpcomingMoviesState {}
 
 class UpcomingMoviesLoaded extends UpcomingMoviesState{
-  final List<Movie> upcomingMovies;
+  final List<MovieModel> upcomingMovies;
 
   UpcomingMoviesLoaded(this.upcomingMovies);
 }

@@ -6,7 +6,7 @@ abstract class DiscoverMoviesState {}
 class DiscoverMoviesInitial extends DiscoverMoviesState {}
 
 class DiscoverMoviesLoaded extends DiscoverMoviesState{
-  final List<Movie> discoverMovies;
+  final List<MovieModel> discoverMovies;
 
   DiscoverMoviesLoaded(this.discoverMovies);
 }

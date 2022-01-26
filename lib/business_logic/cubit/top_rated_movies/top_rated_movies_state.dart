@@ -5,7 +5,7 @@ abstract class TopRatedMoviesState {}
 class TopRatedMoviesInitial extends TopRatedMoviesState {}
 
 class TopRatedMoviesLoaded extends TopRatedMoviesState{
-  final List<Movie> topRatedMovies;
+  final List<MovieModel> topRatedMovies;
 
   TopRatedMoviesLoaded(this.topRatedMovies);
 }

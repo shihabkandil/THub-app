@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:movieapi/constants/strings.dart';
-import 'package:movieapi/data/models/movie.dart';
 
 class MovieWebService{
   late Dio dio;
@@ -16,6 +13,7 @@ class MovieWebService{
     );
     dio = Dio(options);
   }
+
   Future<dynamic> getAllMovies({required String query})async{
     try{
       Response response;
@@ -24,10 +22,44 @@ class MovieWebService{
       else
          response = await dio.get("movie/${query}?api_key="+API);
 
+      if(response.statusCode==200){
       return response.data;
+      }
+      else
+        return [];
     }
     catch(e){
       throw(e);
     }
   }
+
+  Future<dynamic> getSimilarMovies({required String movieID}) async {
+    try{
+      Response response = await dio.get("movie/${movieID}/similar?api_key="+API);
+      if(response.statusCode==200){
+        return response.data;
+      }
+      else
+        return [];
+    }
+    catch(e){
+      throw(e);
+    }
+  }
+
+  Future<dynamic> getMovieTrailers({required String movieID})async {
+    try{
+      Response response = await dio.get("movie/${movieID}/videos?api_key="+API);
+      if(response.statusCode==200){
+        return response.data;
+      }
+      else
+        return [];
+    }
+    catch(e){
+      throw(e);
+    }
+  }
+
+
 }
