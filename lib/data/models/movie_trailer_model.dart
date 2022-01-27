@@ -1,7 +1,7 @@
 class MovieTrailerModel {
   late String name;
   late String key;
-  late DateTime publishedAt;
+  late dynamic publishedAt;
   late String site;
   late String id;
 
@@ -16,7 +16,7 @@ class MovieTrailerModel {
   MovieTrailerModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     key = json['key'];
-    publishedAt = DateTime.parse(json["published_at"]);
+    publishedAt = json["published_at"];
     site = json['site'];
     id = json['id'];
   }

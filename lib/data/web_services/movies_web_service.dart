@@ -49,8 +49,10 @@ class MovieWebService{
 
   Future<dynamic> getMovieTrailers({required String movieID})async {
     try{
+
       Response response = await dio.get("movie/${movieID}/videos?api_key="+API_KEY);
       if(response.statusCode==200){
+        print(movieID);
         return response.data;
       }
       else

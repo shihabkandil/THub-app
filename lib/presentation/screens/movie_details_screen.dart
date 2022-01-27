@@ -6,12 +6,16 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapi/business_logic/cubit/movie_details/movie_details_cubit.dart';
+import 'package:movieapi/business_logic/cubit/movie_trailers/movie_trailer_cubit.dart';
+import 'package:movieapi/business_logic/cubit/similar_movies/similar_movies_cubit.dart';
 import 'package:movieapi/constants/colors.dart';
+import 'package:movieapi/constants/strings.dart';
 import 'package:movieapi/data/models/movie_model.dart';
+import 'package:movieapi/data/models/movie_trailer_model.dart';
 import 'package:movieapi/data/repository/movie_repository.dart';
 import 'package:movieapi/data/web_services/movies_web_service.dart';
 import 'package:movieapi/presentation/widgets/movie_card.dart';
+import 'package:readmore/readmore.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
 
@@ -26,21 +30,30 @@ class MovieDetailsScreen extends StatefulWidget {
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   late List<MovieModel> _similarMovies;
-  late MovieDetailsCubit _movieDetailsCubit;
+  late List<MovieTrailerModel> _movieTrailers;
+
+  late SimilarMoviesCubit _similarMoviesCubit;
+  late MovieTrailersCubit _movieTrailersCubit;
+
   late MovieRepository _movieRepository;
 
   @override
   void initState() {
     super.initState();
-      _movieRepository = MovieRepository(movieWebService: MovieWebService());
-      _movieDetailsCubit = MovieDetailsCubit(_movieRepository);
-      _movieDetailsCubit.getSimilarMovies(widget.movie.id.toString());
+    _similarMovies = [];
+    _movieTrailers = [];
+    _movieRepository = MovieRepository(movieWebService: MovieWebService());
+    _similarMoviesCubit = SimilarMoviesCubit(_movieRepository);
+    _movieTrailersCubit = MovieTrailersCubit(_movieRepository);
+    _similarMoviesCubit.getSimilarMovies(widget.movie.id.toString());
+    _movieTrailersCubit.getMovieTrailers(widget.movie.id.toString());
   }
 
   @override
   void dispose(){
     super.dispose();
-    _movieDetailsCubit.close();
+    _similarMoviesCubit.close();
+    _movieTrailersCubit.close();
   }
 
   Widget ScreenBar(){
@@ -66,7 +79,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     fit: BoxFit.cover,
                     imageUrl: "https://image.tmdb.org/t/p/original/${widget.movie.backdrop_path}",
                     placeholder: (context, url) => Center(child: CircularProgressIndicator(color: MyColors.red,)),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => Center(child:Icon(Icons.error)),
                   ),
                 Container(
                 width: double.infinity,
@@ -82,7 +95,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 ),
                 )
                 ),
-                PlayButton()
+                MovieTrailerBlocWidget(),
               ],
             )
             ),
@@ -90,6 +103,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       leadingWidth: 90,
     );
   }
+
   Widget PlayButton(){
       return Positioned(
           child: UnconstrainedBox (
@@ -105,7 +119,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             alignment: Alignment.center,
             icon: Icon(Icons.play_arrow,size: 40,),
             color: Colors.white,
-            onPressed: ()=>Navigator.pop(context),
+            onPressed: ()=>Navigator.pushNamed(context, MovieTrailersPage,arguments: _movieTrailers[0]),
             ),
             ),
           ),
@@ -152,7 +166,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   Text('Popularity',style: TextStyle(
                     fontSize: 20,
                       fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       color: Colors.white
                   ),)
                 ],
@@ -189,7 +203,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   Text('Votes',style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       color: Colors.white
                   ),
                   )
@@ -202,22 +216,82 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Widget SimilarMoviesTitle(){
+  Widget SimilarMoviesHeader(){
     return Container(
       margin: EdgeInsets.only(top: 35,bottom: 15,left: 30),
       alignment: Alignment.centerLeft,
       child: Text("Similar Movies",
         style: TextStyle(
             fontFamily: 'Poppins',
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w500,
             fontSize: 23,
             color: Colors.white
         ),),
     );
   }
 
+  Widget OverviewHeader(){
+    return Container(
+      margin: EdgeInsets.only(top: 35,bottom: 15,left: 30),
+      alignment: Alignment.centerLeft,
+      child: Text("Overview",
+        style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w500,
+            fontSize: 23,
+            color: Colors.white
+        ),),
+    );
+  }
+
+  Widget OverviewParagraph(){
+    return Container(
+      margin: EdgeInsets.only(bottom: 30,left: 20,right: 20),
+      alignment: Alignment.centerLeft,
+      child: ReadMoreText(
+        '${widget.movie.overview}',
+        trimLines: 4,
+        trimMode: TrimMode.Line,
+        trimCollapsedText: 'Show more',
+        trimExpandedText: 'Show less',
+        style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+            fontSize: 18,
+            color: MyColors.grey
+        ),
+        lessStyle:  TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+            fontSize: 16,
+            color: Colors.redAccent
+        ),
+        moreStyle: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+            fontSize: 16,
+            color: Colors.redAccent
+        ),
+      ),
+    );
+  }
+
+  Widget MovieTrailerBlocWidget(){
+    return BlocBuilder<MovieTrailersCubit,MovieTrailersState>(
+      builder: (BuildContext context, state) {
+        if(state is MovieTrailersLoaded){
+          _movieTrailers = (state).trailers;
+          return PlayButton();
+        }
+        else {
+          return ShowLoadingIndicator();
+        }
+      },
+    );
+  }
+
   Widget SimilarMoviesBlocWidget(){
-    return BlocBuilder<MovieDetailsCubit,MovieDetailsState>(
+    return BlocBuilder<SimilarMoviesCubit,SimilarMoviesState>(
       builder: (BuildContext context, state) {
         if(state is SimilarMoviesLoaded){
           _similarMovies = (state).similarMovies;
@@ -257,9 +331,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create:(BuildContext context)=> _movieDetailsCubit,
-    child:Scaffold(
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<SimilarMoviesCubit>(
+            create: (BuildContext context) => _similarMoviesCubit,
+          ),
+          BlocProvider<MovieTrailersCubit>(
+            create: (BuildContext context) => _movieTrailersCubit,
+          ),
+        ],
+        child:Scaffold(
       backgroundColor: Colors.black,
         body:CustomScrollView(
           slivers: [
@@ -267,7 +348,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             SliverList(delegate: SliverChildListDelegate(
               [
               RatesRow(),
-                SimilarMoviesTitle(),
+                OverviewHeader(),
+                OverviewParagraph(),
+                SimilarMoviesHeader(),
                 SimilarMoviesBlocWidget(),
               ]
             ),
