@@ -12,16 +12,16 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
 
   MovieDetailsCubit(this.movieRepository) : super(MovieDetailsInitial());
 
-  List<MovieModel> getSimilarMovies(){
-    movieRepository.fetchSimilarMovies().then((movies) {
+  List<MovieModel> getSimilarMovies(String movieID){
+    movieRepository.fetchSimilarMovies(movieID).then((movies) {
       emit(SimilarMoviesLoaded(movies));
       this.similarMovies = movies;
     });
     return similarMovies;
   }
 
-  List<MovieTrailerModel> getMovieTrailers(){
-    movieRepository.fetchTrailersVideos().then((videos) {
+  List<MovieTrailerModel> getMovieTrailers(String movieID){
+    movieRepository.fetchTrailersVideos(movieID).then((videos) {
       emit(MovieTrailersLoaded(movieTrailers));
       this.movieTrailers = videos;
     });

@@ -18,9 +18,9 @@ class MovieWebService{
     try{
       Response response;
       if(query == DiscoverMoviesQuery)
-      response = await dio.get("${query}/movie/?api_key="+API+"&page=2");
+      response = await dio.get("${query}/movie/?api_key="+API_KEY+"&page=2");
       else
-         response = await dio.get("movie/${query}?api_key="+API);
+         response = await dio.get("movie/${query}?api_key="+API_KEY);
 
       if(response.statusCode==200){
       return response.data;
@@ -35,7 +35,7 @@ class MovieWebService{
 
   Future<dynamic> getSimilarMovies({required String movieID}) async {
     try{
-      Response response = await dio.get("movie/${movieID}/similar?api_key="+API);
+      Response response = await dio.get("movie/${movieID}/similar?api_key="+API_KEY);
       if(response.statusCode==200){
         return response.data;
       }
@@ -49,7 +49,7 @@ class MovieWebService{
 
   Future<dynamic> getMovieTrailers({required String movieID})async {
     try{
-      Response response = await dio.get("movie/${movieID}/videos?api_key="+API);
+      Response response = await dio.get("movie/${movieID}/videos?api_key="+API_KEY);
       if(response.statusCode==200){
         return response.data;
       }

@@ -45,6 +45,16 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     BlocProvider.of<PopularMoviesCubit>(context).getAllPopularMovies();
   }
 
+  @override
+  void dispose(){
+    BlocProvider.of<DiscoverMoviesCubit>(context).close();
+    BlocProvider.of<TopRatedMoviesCubit>(context).close();
+    BlocProvider.of<PopularMoviesCubit>(context).close();
+    BlocProvider.of<UpcomingMoviesCubit>(context).close();
+    BlocProvider.of<NowPlayingMoviesCubit>(context).close();
+  }
+
+
   Widget AppTitle() {
     return Container(
       margin:EdgeInsets.only(top: 45,left: 35,bottom: 20),
@@ -136,7 +146,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
             return PopularMoviesTab();
           }
           else{
-            return showLoadingIndicator();
+            return ShowLoadingIndicator();
           }
         }
     );
@@ -150,7 +160,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
             return NowplayingCaroussel();
           }
           else{
-            return showLoadingIndicator();
+            return ShowLoadingIndicator();
           }
         }
     );
@@ -164,7 +174,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
             return TopRatingMoviesTab();
           }
           else{
-            return showLoadingIndicator();
+            return ShowLoadingIndicator();
           }
         }
     );
@@ -178,7 +188,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
             return DiscoverMoviesTab();
           }
           else{
-            return showLoadingIndicator();
+            return ShowLoadingIndicator();
           }
         }
     );
@@ -192,14 +202,14 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
             return UpcomingMoviesTab();
           }
           else{
-            return showLoadingIndicator();
+            return ShowLoadingIndicator();
           }
         }
     );
   }
 
 
-  Widget showLoadingIndicator(){
+  Widget ShowLoadingIndicator(){
     return Center(
       child: CircularProgressIndicator(
         color: MyColors.red,

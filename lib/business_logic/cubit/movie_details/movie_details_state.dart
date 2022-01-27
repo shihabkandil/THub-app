@@ -8,6 +8,10 @@ class SimilarMoviesLoading extends MovieDetailsState{}
 
 class MovieTrailersLoading extends MovieDetailsState{}
 
+class SimilarMoviesError extends MovieDetailsState{}
+
+class MovieTrailersError extends MovieDetailsState{}
+
 class SimilarMoviesLoaded extends MovieDetailsState{
   final List<MovieModel> similarMovies;
   SimilarMoviesLoaded(this.similarMovies);

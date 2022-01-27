@@ -2,12 +2,12 @@ class MovieModel{
   late int id;
   late String overview;
   late String posterPath;
-  late String backdrop_path;
+  late dynamic backdrop_path;
   late String releaseDate;
   late String title;
-  late String vote_average;
-  late String votes_count;
-  late String popularity;
+  late dynamic vote_average;
+  late dynamic votes_count;
+  late dynamic popularity;
 
   MovieModel(
       this.id,
