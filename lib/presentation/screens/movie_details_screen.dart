@@ -14,6 +14,7 @@ import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/data/models/movie_trailer_model.dart';
 import 'package:movieapi/data/repository/movie_repository.dart';
 import 'package:movieapi/data/web_services/movies_web_service.dart';
+import 'package:movieapi/presentation/widgets/blinkingPlayButton.dart';
 import 'package:movieapi/presentation/widgets/movie_card.dart';
 import 'package:readmore/readmore.dart';
 
@@ -281,10 +282,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       builder: (BuildContext context, state) {
         if(state is MovieTrailersLoaded){
           _movieTrailers = (state).trailers;
+          if(_movieTrailers.isEmpty)
+            return Align(
+              child: Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color:MyColors.red,
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                child: Text("Coming Soon",style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white
+                ),
+                ),
+              ),
+            );
+          else
           return PlayButton();
         }
         else {
-          return ShowLoadingIndicator();
+          return BlinkingPlayButton();
         }
       },
     );
