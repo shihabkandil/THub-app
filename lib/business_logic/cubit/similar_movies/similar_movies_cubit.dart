@@ -4,13 +4,13 @@ import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/data/models/movie_trailer_model.dart';
 import 'package:movieapi/data/repository/movie_repository.dart';
 part 'movie_details_state.dart';
-class MovieDetailsCubit extends Cubit<MovieDetailsState> {
+class SimilarMoviesCubit extends Cubit<SimilarMoviesState> {
 
   final MovieRepository movieRepository;
   List<MovieModel> similarMovies = [];
   List<MovieTrailerModel> movieTrailers = [];
 
-  MovieDetailsCubit(this.movieRepository) : super(MovieDetailsInitial());
+  SimilarMoviesCubit(this.movieRepository) : super(SimilarMoviesInitial());
 
   List<MovieModel> getSimilarMovies(String movieID){
     movieRepository.fetchSimilarMovies(movieID).then((movies) {
