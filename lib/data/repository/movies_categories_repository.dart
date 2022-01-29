@@ -4,31 +4,20 @@ import 'package:movieapi/data/web_services/movies_web_service.dart';
 
 class MoviesCategoryRepository{
   final MovieWebService movieWebService;
+
+  late List<MovieModel>movies;
   MoviesCategoryRepository(this.movieWebService);
 
-  Future<List<MovieModel>> fetchPopularMovies()async{
-    final moviesResults = await movieWebService.getAllMovies(query:PopularMoviesQuery);
-    List<MovieModel>movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
-    return movies;
+  Future<List<MovieModel>> fetchMovies({required String moviesQuery})async{
+    final moviesResults = await movieWebService.getAllMovies(query:moviesQuery);
+     movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
+     filterResultsByGenreIds();
+     return movies;
   }
-  Future<List<MovieModel>> fetchNowPlayingMovies()async{
-    final moviesResults = await movieWebService.getAllMovies(query: NowplayingMoviesQuery);
-    List<MovieModel>movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
-    return movies;
+
+   void filterResultsByGenreIds(){
+      checkId(int id) => FilterByIDs.contains(id);
+      movies.removeWhere((element) => element.genresIds.any(checkId));
   }
-  Future<List<MovieModel>> fetchTopRatedMovies()async{
-    final moviesResults = await movieWebService.getAllMovies(query: TopRatedMoviesQuery);
-    List<MovieModel>movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
-    return movies;
-  }
-  Future<List<MovieModel>> fetchDiscoverMovies()async{
-    final moviesResults = await movieWebService.getAllMovies(query:DiscoverMoviesQuery);
-    List<MovieModel>movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
-    return movies;
-  }
-  Future<List<MovieModel>> fetchUpcomingMovies()async{
-    final moviesResults = await movieWebService.getAllMovies(query:UpcomingMoviesQuery);
-    List<MovieModel>movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
-    return movies;
-  }
+
 }

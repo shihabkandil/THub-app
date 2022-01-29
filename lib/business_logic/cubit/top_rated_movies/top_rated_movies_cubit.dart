@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapi/constants/strings.dart';
 import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/data/repository/movies_categories_repository.dart';
 part 'top_rated_movies_state.dart';
@@ -10,7 +11,7 @@ class TopRatedMoviesCubit extends Cubit<TopRatedMoviesState> {
   TopRatedMoviesCubit(this.moviesRepository) : super(TopRatedMoviesInitial());
 
   List<MovieModel> getAllTopRatedMovies(){
-    moviesRepository.fetchTopRatedMovies().then((movies) {
+    moviesRepository.fetchMovies(moviesQuery:TopRatedMoviesQuery).then((movies) {
       emit(TopRatedMoviesLoaded(movies));
       this.movies = movies;
     });

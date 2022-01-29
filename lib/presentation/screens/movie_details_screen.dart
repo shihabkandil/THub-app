@@ -14,7 +14,6 @@ import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/data/models/movie_trailer_model.dart';
 import 'package:movieapi/data/repository/movie_repository.dart';
 import 'package:movieapi/data/web_services/movies_web_service.dart';
-import 'package:movieapi/presentation/widgets/blinkingPlayButton.dart';
 import 'package:movieapi/presentation/widgets/movie_card.dart';
 import 'package:readmore/readmore.dart';
 
@@ -301,7 +300,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           return PlayButton();
         }
         else {
-          return BlinkingPlayButton();
+          return ShowLoadingIndicator();
         }
       },
     );
@@ -333,7 +332,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     return Container(
       margin: EdgeInsets.only(bottom: 30),
       child: CarouselSlider.builder(
-        itemCount: 9,
+        itemCount: _similarMovies.length,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
             MovieCard(movie: _similarMovies[itemIndex],),
         options: CarouselOptions(

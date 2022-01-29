@@ -25,11 +25,11 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMixin{
 
-  late List<MovieModel> popularMovies;
-  late List<MovieModel> discoverMovies;
-  late List<MovieModel> topRatedMovies;
-  late List<MovieModel> upcomingMovies;
-  late List<MovieModel> nowPlayingMovies;
+  late List<MovieModel> _popularMovies;
+  late List<MovieModel> _discoverMovies;
+  late List<MovieModel> _topRatedMovies;
+  late List<MovieModel> _upcomingMovies;
+  late List<MovieModel> _nowPlayingMovies;
 
 
   late TabController _tabController;
@@ -142,7 +142,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return BlocBuilder<PopularMoviesCubit,PopularMoviesState>(
         builder: (context,state){
           if(state is PopularMoviesLoaded && (state).popularMovies.length>=5){
-            popularMovies = (state).popularMovies;
+            _popularMovies = (state).popularMovies;
             return PopularMoviesTab();
           }
           else{
@@ -156,7 +156,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return BlocBuilder<NowPlayingMoviesCubit,NowPlayingMoviesState>(
         builder: (context,state){
           if(state is NowPlayingMoviesLoaded && (state).nowPlayingMovies.length>=5){
-            nowPlayingMovies = (state).nowPlayingMovies;
+            _nowPlayingMovies = (state).nowPlayingMovies;
             return NowplayingCaroussel();
           }
           else{
@@ -170,7 +170,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return BlocBuilder<TopRatedMoviesCubit,TopRatedMoviesState>(
         builder: (context,state){
           if(state is TopRatedMoviesLoaded && (state).topRatedMovies.length>=5){
-            topRatedMovies = (state).topRatedMovies;
+            _topRatedMovies = (state).topRatedMovies;
             return TopRatingMoviesTab();
           }
           else{
@@ -184,7 +184,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return BlocBuilder<DiscoverMoviesCubit,DiscoverMoviesState>(
         builder: (context,state){
           if(state is DiscoverMoviesLoaded && (state).discoverMovies.length>=5){
-            discoverMovies = (state).discoverMovies;
+            _discoverMovies = (state).discoverMovies;
             return DiscoverMoviesTab();
           }
           else{
@@ -198,7 +198,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return BlocBuilder<UpcomingMoviesCubit,UpcomingMoviesState>(
         builder: (context,state){
           if(state is UpcomingMoviesLoaded && (state).upcomingMovies.length>=5){
-            upcomingMovies = (state).upcomingMovies;
+            _upcomingMovies = (state).upcomingMovies;
             return UpcomingMoviesTab();
           }
           else{
@@ -221,9 +221,9 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
       return Container(
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 8,
+            itemCount: _popularMovies.length,
             itemBuilder: (context,index){
-              return MovieCard(movie: popularMovies[index],);
+              return MovieCard(movie: _popularMovies[index],);
             }
         ),
       );
@@ -233,9 +233,9 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return Container(
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 8,
+          itemCount: _discoverMovies.length,
           itemBuilder: (context,index){
-            return MovieCard(movie: discoverMovies[index],);
+            return MovieCard(movie: _discoverMovies[index],);
           }
       ),
     );
@@ -245,9 +245,9 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return Container(
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 8,
+          itemCount: _topRatedMovies.length,
           itemBuilder: (context,index){
-            return MovieCard(movie: topRatedMovies[index],);
+            return MovieCard(movie: _topRatedMovies[index],);
           }
       ),
     );
@@ -257,9 +257,9 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return Container(
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 8,
+          itemCount: _upcomingMovies.length,
           itemBuilder: (context,index){
-            return MovieCard(movie: upcomingMovies[index],);
+            return MovieCard(movie: _upcomingMovies[index],);
           }
       ),
     );
@@ -283,9 +283,9 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
     return Container(
       margin: EdgeInsets.only(bottom: 30),
       child: CarouselSlider.builder(
-        itemCount: 9,
+        itemCount: _nowPlayingMovies.length,
         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-             MovieCard(movie: nowPlayingMovies[itemIndex],),
+             MovieCard(movie: _nowPlayingMovies[itemIndex],),
         options: CarouselOptions(
           height: 1200/MediaQuery.of(context).devicePixelRatio,
         autoPlay: true,

@@ -8,6 +8,7 @@ class MovieModel{
   late dynamic vote_average;
   late dynamic votes_count;
   late dynamic popularity;
+  late List<int> genresIds;
 
   MovieModel(
       this.id,
@@ -28,6 +29,7 @@ class MovieModel{
     backdrop_path = json["backdrop_path"];
     releaseDate = json['release_date'];
     title = json['title'];
+    genresIds = json['genre_ids'].cast<int>();
     popularity = json["popularity"];
     vote_average = json["vote_average"];
     votes_count = json["vote_count"];

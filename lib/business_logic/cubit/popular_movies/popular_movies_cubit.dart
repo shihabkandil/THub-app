@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapi/constants/strings.dart';
 import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/data/repository/movies_categories_repository.dart';
 
@@ -11,7 +12,7 @@ class PopularMoviesCubit extends Cubit<PopularMoviesState> {
   PopularMoviesCubit(this.moviesRepository) : super(PopularMoviesInitial());
 
   List<MovieModel> getAllPopularMovies(){
-    moviesRepository.fetchPopularMovies().then((movies) {
+    moviesRepository.fetchMovies(moviesQuery:PopularMoviesQuery).then((movies) {
       emit(PopularMoviesLoaded(movies));
       this.movies = movies;
     });

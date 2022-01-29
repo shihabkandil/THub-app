@@ -8,4 +8,4 @@ const TopRatedMoviesQuery = "top_rated";
 const DiscoverMoviesQuery = "discover";
 const NowplayingMoviesQuery = "now_playing";
 const UpcomingMoviesQuery = "upcoming";
-
+const List<int>FilterByIDs = [53,10749,27];
