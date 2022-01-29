@@ -23,7 +23,7 @@ class MovieRepository{
 
   void filterResultsByGenreIds(){
     checkId(int id) => FilterByIDs.contains(id);
-    similarMovies.removeWhere((element) => element.genresIds.any(checkId));
+    similarMovies.removeWhere((element) => element.genresIds.any(checkId)&& !element.genresIds.contains(FamilyGenreId));
   }
 
 

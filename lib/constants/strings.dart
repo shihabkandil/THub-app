@@ -8,4 +8,5 @@ const TopRatedMoviesQuery = "top_rated";
 const DiscoverMoviesQuery = "discover";
 const NowplayingMoviesQuery = "now_playing";
 const UpcomingMoviesQuery = "upcoming";
-const List<int>FilterByIDs = [53,10749,27];
+const List<int>FilterByIDs = [53,10749,27,18,35,14];
+const FamilyGenreId = 10751;

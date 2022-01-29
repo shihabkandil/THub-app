@@ -16,8 +16,8 @@ class MoviesCategoryRepository{
   }
 
    void filterResultsByGenreIds(){
-      checkId(int id) => FilterByIDs.contains(id);
-      movies.removeWhere((element) => element.genresIds.any(checkId));
+      checkId(int id) => (FilterByIDs.contains(id));
+      movies.removeWhere((element) => element.genresIds.any(checkId) && !element.genresIds.contains(FamilyGenreId));
   }
 
 }
