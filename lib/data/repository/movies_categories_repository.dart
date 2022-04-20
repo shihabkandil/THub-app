@@ -2,6 +2,8 @@ import 'package:movieapi/constants/strings.dart';
 import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/data/web_services/movies_web_service.dart';
 
+import '../../helper/filtering_data.dart';
+
 class MoviesCategoryRepository{
   final MovieWebService movieWebService;
 
@@ -10,14 +12,9 @@ class MoviesCategoryRepository{
 
   Future<List<MovieModel>> fetchMovies({required String moviesQuery})async{
     final moviesResults = await movieWebService.getAllMovies(query:moviesQuery);
-     movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
-     filterResultsByGenreIds();
-     return movies;
+    movies = moviesResults['results'].map<MovieModel>((json) => MovieModel.fromJson(json)).toList();
+    movies = DataFilter.filterResultsByGenreIds(movies);
+    movies = DataFilter.removeWhereNoPosterImage(movies);
+    return movies;
   }
-
-   void filterResultsByGenreIds(){
-      checkId(int id) => (FilterByIDs.contains(id));
-      movies.removeWhere((element) => element.genresIds.any(checkId) && !element.genresIds.contains(FamilyGenreId));
-  }
-
 }
