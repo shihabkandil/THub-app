@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:movieapi/business_logic/cubit/discover_movies/discover_movies_cubit.dart';
 import 'package:movieapi/business_logic/cubit/now_playing_movies/now_playing_movies_cubit.dart';
 import 'package:movieapi/business_logic/cubit/popular_movies/popular_movies_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:movieapi/business_logic/cubit/top_rated_movies/top_rated_movies_
 import 'package:movieapi/business_logic/cubit/upcoming_movies/upcoming_movies_cubit.dart';
 import 'package:movieapi/constants/colors.dart';
 import 'package:movieapi/data/models/movie_model.dart';
+import 'package:movieapi/presentation/widgets/app_bottom_navbar.dart';
 import 'package:movieapi/presentation/widgets/movie_card.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -301,6 +303,7 @@ class _MoviesScreenState extends State<MoviesScreen> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: AppBottomNavBar(),
       backgroundColor: MyColors.darkBlue,
         body:SingleChildScrollView(
         child: Column(

@@ -2,7 +2,7 @@ import 'package:movieapi/constants/strings.dart';
 import 'package:movieapi/data/models/movie_model.dart';
 import 'package:movieapi/data/web_services/movies_web_service.dart';
 
-import '../../helper/filtering_data.dart';
+import '../../helper/data_filter.dart';
 
 class MoviesCategoryRepository{
   final MovieWebService movieWebService;
