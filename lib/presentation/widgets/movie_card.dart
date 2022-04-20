@@ -23,8 +23,9 @@ class MovieCard extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: CachedNetworkImage(
-            fit: BoxFit.cover,
-            imageUrl: "https://image.tmdb.org/t/p/original/${movie.posterPath}",
+            fit: (movie.posterPath != '')? BoxFit.fill : BoxFit.fitWidth,
+            imageUrl:(movie.posterPath != '')?"https://image.tmdb.org/t/p/original/${movie.posterPath}"
+                :"https://www.seekpng.com/png/full/5-50378_product-categories-more-coming-soon-png.png",
             placeholder: (context, url) => Center(child: CircularProgressIndicator(color: MyColors.red,)),
             errorWidget: (context, url, error) => Icon(Icons.error),
             )

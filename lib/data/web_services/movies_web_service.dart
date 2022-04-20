@@ -18,12 +18,15 @@ class MovieWebService{
     try{
       Response response;
       if(query == DiscoverMoviesQuery)
-      response = await dio.get("${query}/movie/?api_key="+API_KEY+"&page=3");
+      response = await dio.get("${query}/movie/?api_key="+API_KEY);
       else if(query == TopRatedMoviesQuery){
-        response = await dio.get("discover/movie/?api_key="+API_KEY+"&with_genres=10751&page=2");
+        response = await dio.get("discover/movie/?api_key="+API_KEY+"&with_genres=10751");
       }
       else if(query == NowplayingMoviesQuery){
-        response = await dio.get("movie/now_playing?api_key="+API_KEY+"&with_genres=10751&page=1");
+        response = await dio.get("movie/now_playing?api_key="+API_KEY+"&with_genres=10751");
+      }
+      else if (query == PopularMoviesQuery){
+        response = await dio.get("movie/now_playing?api_key="+API_KEY+"&with_genres=10751&page=2");
       }
       else
          response = await dio.get("movie/${query}?api_key="+API_KEY);

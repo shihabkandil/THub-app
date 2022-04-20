@@ -25,8 +25,8 @@ class MovieModel{
   MovieModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     overview = json['overview'];
-    posterPath = json['poster_path'];
-    backdrop_path = json["backdrop_path"];
+    posterPath = json['poster_path'] ?? '';
+    backdrop_path = json["backdrop_path"] ?? '';
     releaseDate = json['release_date'];
     title = json['title'];
     genresIds = json['genre_ids'].cast<int>();

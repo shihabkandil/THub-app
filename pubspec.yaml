@@ -41,6 +41,7 @@ dependencies:
   cached_network_image: ^3.2.0
   carousel_slider: ^4.0.0
   youtube_player_flutter: ^8.0.0
+  google_nav_bar: ^5.0.6
   flutter_launcher_icons: "^0.9.2"
 
 

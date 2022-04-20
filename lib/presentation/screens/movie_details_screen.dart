@@ -75,11 +75,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             background: Stack(
               fit: StackFit.expand,
               children: [
-                CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: "https://image.tmdb.org/t/p/original/${widget.movie.backdrop_path}",
-                    placeholder: (context, url) => Center(child: CircularProgressIndicator(color: MyColors.red,)),
-                    errorWidget: (context, url, error) => Center(child:Icon(Icons.error)),
+                Container(
+                  child: (widget.movie.backdrop_path != '') ? Image.network("https://image.tmdb.org/t/p/original/${widget.movie.backdrop_path}",fit: BoxFit.cover)
+                : Image.asset('assets/images/coming_soon.jpg',fit: BoxFit.cover,),
                   ),
                 Container(
                 width: double.infinity,
