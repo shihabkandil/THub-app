@@ -38,7 +38,6 @@ dependencies:
   dio: ^4.0.4
   readmore: ^2.1.0
   tab_indicator_styler: ^2.0.0
-  cached_network_image: ^3.2.0
   carousel_slider: ^4.0.0
   youtube_player_flutter: ^8.0.0
   google_nav_bar: ^5.0.6

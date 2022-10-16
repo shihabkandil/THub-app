@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapi/business_logic/cubit/discover_movies/discover_movies_cubit.dart';
-import 'package:movieapi/business_logic/cubit/home_navbar/home_navbar_cubit.dart';
 import 'package:movieapi/business_logic/cubit/now_playing_movies/now_playing_movies_cubit.dart';
 import 'package:movieapi/business_logic/cubit/popular_movies/popular_movies_cubit.dart';
 import 'package:movieapi/business_logic/cubit/similar_movies/similar_movies_cubit.dart';
@@ -15,11 +14,9 @@ import 'package:movieapi/data/models/movie_trailer_model.dart';
 import 'package:movieapi/data/repository/movie_repository.dart';
 import 'package:movieapi/data/repository/movies_categories_repository.dart';
 import 'package:movieapi/data/web_services/movies_web_service.dart';
-import 'package:movieapi/presentation/screens/movies_tab.dart';
+import 'package:movieapi/presentation/screens/home_screen.dart';
 import 'package:movieapi/presentation/screens/movie_details_screen.dart';
 import 'package:movieapi/presentation/screens/movie_trailers_screen.dart';
-
-import '../presentation/screens/home_screen.dart';
 
 class AppRouter{
   late MoviesCategoryRepository moviesRepository;
@@ -69,11 +66,8 @@ class AppRouter{
               BlocProvider<UpcomingMoviesCubit>(
                 create: (BuildContext context) => upcomingMoviesCubit,
               ),
-              BlocProvider<HomeNavBarCubit>(
-                create: (BuildContext context) => HomeNavBarCubit(),
-              ),
             ],
-            child: HomeScreen(),
+            child: MoviesScreen(),
           ),
       );
 

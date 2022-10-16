@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapi/constants/colors.dart';
@@ -22,13 +21,13 @@ class MovieCard extends StatelessWidget {
         onTap: ()=>Navigator.pushNamed(context,MovieDetailsPage,arguments: movie),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: CachedNetworkImage(
-            fit: (movie.posterPath != '')? BoxFit.fill : BoxFit.fitWidth,
-            imageUrl:(movie.posterPath != '')?"https://image.tmdb.org/t/p/original/${movie.posterPath}"
-                :"https://www.seekpng.com/png/full/5-50378_product-categories-more-coming-soon-png.png",
-            placeholder: (context, url) => Center(child: CircularProgressIndicator(color: MyColors.red,)),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-            )
+          // child: CachedNetworkImage(
+          //   fit: (movie.posterPath != '')? BoxFit.fill : BoxFit.fitWidth,
+          //   imageUrl:(movie.posterPath != '')?"https://image.tmdb.org/t/p/original/${movie.posterPath}"
+          //       :"https://www.seekpng.com/png/full/5-50378_product-categories-more-coming-soon-png.png",
+          //   placeholder: (context, url) => Center(child: CircularProgressIndicator(color: MyColors.red,)),
+          //   errorWidget: (context, url, error) => Icon(Icons.error),
+          //   )
         ),
       )
     );
